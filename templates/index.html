@@ -2,68 +2,91 @@
 
 {% block content %}
 <main>
-  <nav class="navbar container" aria-label="Main navigation">
-    <a class="brand" href="{{ url_for('home') }}" aria-label="GrandPal home"><span>G</span> GrandPal</a>
-    <a class="nav-link" href="#connect">Find care <span aria-hidden="true">→</span></a>
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="nav-inner container">
+      <a class="brand" href="#home" aria-label="GrandPal home"><span>G</span> GrandPal</a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <div class="nav-links">
+        <a href="#why-grandpal">Why GrandPal</a>
+        <a href="#services">Services</a>
+        <a href="#stories">Stories</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a class="nav-cta" href="#connect">Get started <span>→</span></a>
+    </div>
   </nav>
 
-  <section class="hero container">
-    <div class="hero-copy">
-      <p class="eyebrow"><span class="pulse"></span> Compassionate support, nearby</p>
-      <h1>GrandPal Version 2</h1>
-      <p class="intro">GrandPal connects older adults and their families with trusted, thoughtful care designed around the things that matter most.</p>
-      <div class="hero-details">
-        <div><strong>1,200+</strong><span>families supported</span></div>
-        <div><strong>24/7</strong><span>care coordination</span></div>
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span class="pulse"></span> Thoughtful senior support, every day</p>
+        <h1>More good days. <em>More peace</em> of mind.</h1>
+        <p class="intro">GrandPal brings dependable, human support to older adults and their families—so life can keep moving with confidence, comfort, and connection.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#connect">Find support today <span>→</span></a>
+          <a class="text-link" href="#services">Explore our services <span>↓</span></a>
+        </div>
+        <div class="hero-details" aria-label="GrandPal statistics">
+          <div><strong>1,200+</strong><span>families supported</span></div>
+          <div><strong>4.9/5</strong><span>family satisfaction</span></div>
+          <div><strong>24/7</strong><span>care coordination</span></div>
+        </div>
       </div>
-    </div>
 
-    <div class="hero-art" aria-hidden="true">
-      <div class="sun"></div>
-      <div class="arch arch-back"></div>
-      <div class="arch arch-front"></div>
-      <div class="leaf leaf-one"></div>
-      <div class="leaf leaf-two"></div>
-      <div class="care-card">
-        <span class="card-icon">✦</span>
-        <span>Made for<br><strong>brighter days</strong></span>
+      <div class="hero-visual reveal" aria-label="GrandPal care companion illustration">
+        <div class="visual-glow"></div>
+        <div class="visual-sun"></div>
+        <div class="visual-hill hill-one"></div><div class="visual-hill hill-two"></div>
+        <div class="visual-leaf leaf-left"></div><div class="visual-leaf leaf-right"></div>
+        <div class="floating-card card-top"><span class="sparkle">✦</span><span>Care with<br><strong>heart</strong></span></div>
+        <div class="floating-card card-bottom"><span class="avatar">♥</span><span><strong>Your care team</strong><br><small>Here when it matters</small></span></div>
       </div>
     </div>
   </section>
 
-  <section class="connect-section" id="connect">
-    <div class="container form-layout">
-      <div class="form-intro">
-        <p class="eyebrow">Get started</p>
-        <h2>A helping hand is just around the corner.</h2>
-        <p>Tell us a little about yourself. A GrandPal care guide will reach out to learn how we can help.</p>
-        <div class="trust-note"><span>✓</span> No commitment. Just a warm conversation.</div>
-      </div>
-      <form class="registration-form" method="post" novalidate>
-        {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
-        <div class="field">
-          <label for="name">Your name</label>
-          <input id="name" name="name" type="text" value="{{ form_data.get('name', '') }}" placeholder="Jane Smith" required autocomplete="name">
-        </div>
-        <div class="field">
-          <label for="email">Email address</label>
-          <input id="email" name="email" type="email" value="{{ form_data.get('email', '') }}" placeholder="jane@example.com" required autocomplete="email">
-        </div>
-        <div class="field-grid">
-          <div class="field">
-            <label for="phone">Phone number</label>
-            <input id="phone" name="phone" type="tel" value="{{ form_data.get('phone', '') }}" placeholder="(555) 123-4567" required autocomplete="tel">
-          </div>
-          <div class="field">
-            <label for="city">City</label>
-            <input id="city" name="city" type="text" value="{{ form_data.get('city', '') }}" placeholder="Your city" required autocomplete="address-level2">
-          </div>
-        </div>
-        <button type="submit">Connect with GrandPal <span aria-hidden="true">→</span></button>
-        <p class="privacy">By submitting, you agree to be contacted by GrandPal about care options.</p>
-      </form>
+  <section class="trust-strip">
+    <div class="container trust-items"><span>Personalized support</span><i></i><span>Trusted local companions</span><i></i><span>Simple, flexible help</span><i></i><span>Families kept informed</span></div>
+  </section>
+
+  <section class="section container" id="why-grandpal">
+    <div class="section-heading centered reveal">
+      <p class="eyebrow">Why GrandPal</p>
+      <h2>Care should make life feel <em>lighter.</em></h2>
+      <p>We pair practical help with genuine companionship, giving every family a steady, trusted source of support.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature-card reveal"><div class="icon-wrap icon-peach">♡</div><h3>Truly personal</h3><p>Support is built around your routines, preferences, and the people you love.</p></article>
+      <article class="feature-card reveal"><div class="icon-wrap icon-sage">⌂</div><h3>Comfort at home</h3><p>Stay independent in familiar surroundings with help that fits naturally into the day.</p></article>
+      <article class="feature-card reveal"><div class="icon-wrap icon-lilac">✓</div><h3>Carefully matched</h3><p>We take time to connect each family with the right GrandPal companion.</p></article>
+      <article class="feature-card reveal"><div class="icon-wrap icon-gold">☀</div><h3>Clarity for families</h3><p>Thoughtful updates and reliable coordination offer reassurance from near or far.</p></article>
     </div>
   </section>
+
+  <section class="services-section" id="services">
+    <div class="container services-layout">
+      <div class="services-copy reveal"><p class="eyebrow">How we help</p><h2>Small moments of help. A <em>big</em> difference.</h2><p>From important appointments to everyday to-dos, GrandPal is here to make each week a little easier and more enjoyable.</p><a class="text-link" href="#connect">Talk to a care guide <span>→</span></a></div>
+      <div class="service-grid">
+        <article class="service-card reveal"><div class="service-icon">✚</div><h3>Medical Appointment Assistance</h3><p>Reliable company and support before, during, and after appointments.</p></article>
+        <article class="service-card reveal"><div class="service-icon">↗</div><h3>Transportation</h3><p>Friendly, dependable rides for wherever the day needs to go.</p></article>
+        <article class="service-card reveal"><div class="service-icon">⌂</div><h3>Home Visits</h3><p>A familiar face for conversation, check-ins, and practical support.</p></article>
+        <article class="service-card reveal"><div class="service-icon">☷</div><h3>Daily Errands</h3><p>Help with shopping, pickups, and the little things that add up.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="stories-section container" id="stories">
+    <div class="section-heading reveal"><p class="eyebrow">Families first</p><h2>A little help can change <em>everything.</em></h2></div>
+    <div class="testimonial-grid">
+      <figure class="testimonial featured reveal"><div class="quote-mark">“</div><blockquote>GrandPal brought back a sense of ease for all of us. Dad has someone he genuinely enjoys spending time with, and I know he has support when I can't be there.</blockquote><figcaption><span class="testimonial-avatar avatar-blue">M</span><div><strong>Meera R.</strong><small>Daughter of a GrandPal member</small></div></figcaption></figure>
+      <figure class="testimonial reveal"><div class="stars">★★★★★</div><blockquote>“My companion feels like a friend. We get things done, have a cup of tea, and I always feel better after our visits.”</blockquote><figcaption><span class="testimonial-avatar avatar-coral">J</span><div><strong>James T.</strong><small>GrandPal member</small></div></figcaption></figure>
+      <figure class="testimonial reveal"><div class="stars">★★★★★</div><blockquote>“The updates are such a comfort. GrandPal gives Mum the freedom she wants and gives our family real peace of mind.”</blockquote><figcaption><span class="testimonial-avatar avatar-gold">A</span><div><strong>Anita P.</strong><small>Daughter of a GrandPal member</small></div></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="faq-section" id="faq"><div class="container faq-layout"><div class="faq-intro reveal"><p class="eyebrow">Frequently asked questions</p><h2>We’re here to make the next step <em>simple.</em></h2><p>Still wondering if GrandPal is right for your family? We’d be happy to talk it through.</p><a class="text-link" href="#connect">Speak with our team <span>→</span></a></div><div class="faq-list reveal"><details open><summary>Who can use GrandPal?<span>+</span></summary><p>GrandPal is for older adults who would benefit from a little extra help, companionship, or confidence at home and in the community.</p></details><details><summary>How do you match companions?<span>+</span></summary><p>We learn about each person’s needs, routines, and interests, then make a thoughtful match with a compatible care companion.</p></details><details><summary>Can family members stay involved?<span>+</span></summary><p>Absolutely. We keep families informed and work alongside them to make support feel seamless.</p></details><details><summary>How do I get started?<span>+</span></summary><p>Complete the short form below and a GrandPal care guide will contact you to learn more about your needs.</p></details></div></div></section>
+
+  <section class="connect-section" id="connect"><div class="container form-layout"><div class="form-intro reveal"><p class="eyebrow">A gentle first step</p><h2>Let’s find the support that feels <em>right.</em></h2><p>Tell us a little about yourself. A GrandPal care guide will be in touch to learn how we can help.</p><div class="trust-note"><span>✓</span> No commitment. Just a warm conversation.</div></div><form class="registration-form reveal" method="post" novalidate>{% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}<div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" value="{{ form_data.get('name', '') }}" placeholder="Jane Smith" required autocomplete="name"></div><div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" value="{{ form_data.get('email', '') }}" placeholder="jane@example.com" required autocomplete="email"></div><div class="field-grid"><div class="field"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" value="{{ form_data.get('phone', '') }}" placeholder="(555) 123-4567" required autocomplete="tel"></div><div class="field"><label for="city">City</label><input id="city" name="city" type="text" value="{{ form_data.get('city', '') }}" placeholder="Your city" required autocomplete="address-level2"></div></div><button type="submit">Connect with GrandPal <span>→</span></button><p class="privacy">By submitting, you agree to be contacted by GrandPal about care options.</p></form></div></section>
 </main>
-<footer class="container"><a class="brand" href="{{ url_for('home') }}"><span>G</span> GrandPal</a><p>Care, connection, and peace of mind.</p></footer>
+<footer><div class="container footer-grid"><div><a class="brand" href="#home"><span>G</span> GrandPal</a><p class="footer-description">A little more support. A lot more peace of mind.</p></div><div class="footer-links"><div><h4>Explore</h4><a href="#why-grandpal">Why GrandPal</a><a href="#services">Our services</a><a href="#stories">Family stories</a></div><div><h4>Connect</h4><a href="tel:+15550102477">(555) 010-2477</a><a href="mailto:hello@grandpal.com">hello@grandpal.com</a><a href="#connect">Get started</a></div></div></div><div class="container footer-bottom"><span>© 2026 GrandPal. All rights reserved.</span><span>Care, connection, and confidence.</span></div></footer>
+<script>const toggle=document.querySelector('.menu-toggle'),links=document.querySelector('.nav-links');toggle.addEventListener('click',()=>{const open=links.classList.toggle('is-open');toggle.setAttribute('aria-expanded',open);});</script>
 {% endblock %}

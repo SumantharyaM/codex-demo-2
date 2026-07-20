@@ -3,7 +3,7 @@ name: Deploy GrandPal
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:

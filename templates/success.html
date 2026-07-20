@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}You're registered | GrandPal{% endblock %}
+{% block content %}
+<main class="success-page">
+  <nav class="navbar container"><a class="brand" href="{{ url_for('home') }}"><span>G</span> GrandPal</a></nav>
+  <section class="success-card">
+    <div class="success-mark">✓</div>
+    <p class="eyebrow">Registration received</p>
+    <h1>Welcome to GrandPal, {{ name }}.</h1>
+    <p>Thank you for taking this first step. One of our care guides will be in touch soon to learn how we can support you and your family.</p>
+    <a class="return-link" href="{{ url_for('home') }}">Return to home <span>→</span></a>
+  </section>
+</main>
+{% endblock %}

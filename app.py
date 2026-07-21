@@ -2,7 +2,7 @@ import logging
 import os
 
 import mysql.connector
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request
 from mysql.connector import Error
 
 
@@ -92,6 +92,95 @@ def home():
         return render_template("success.html", name=name)
 
     return render_template("index.html", form_data={})
+
+
+@app.route("/api/users", methods=["POST"])
+def add_user_api():
+    """Add a user through the REST API using the site's MySQL connection."""
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify(status="error", message="A JSON request body is required."), 400
+
+    fields = ("name", "email", "phone", "city")
+    user = {field: str(data.get(field, "")).strip() for field in fields}
+    missing_fields = [field for field in fields if not user[field]]
+    if missing_fields:
+        return (
+            jsonify(
+                status="error",
+                message=f"Required fields missing: {', '.join(missing_fields)}",
+            ),
+            400,
+        )
+
+    connection = connect_to_database()
+    if not connection:
+        return jsonify(status="error", message="Database unavailable."), 503
+
+    cursor = None
+    try:
+        cursor = connection.cursor(prepared=True)
+        cursor.execute(
+            "INSERT INTO users (name, email, phone, city) VALUES (%s, %s, %s, %s)",
+            tuple(user[field] for field in fields),
+        )
+        connection.commit()
+    except Error:
+        app.logger.exception("Unable to add user through the API.")
+        connection.rollback()
+        return jsonify(status="error", message="Unable to add user."), 500
+    finally:
+        if cursor:
+            cursor.close()
+
+    return jsonify(status="success", message="User added successfully"), 201
+
+
+@app.route("/api/users", methods=["GET"])
+def get_users_api():
+    """Return every stored user as JSON."""
+    connection = connect_to_database()
+    if not connection:
+        return jsonify(status="error", message="Database unavailable."), 503
+
+    cursor = None
+    try:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT id, name, email, phone, city FROM users ORDER BY id")
+        users = cursor.fetchall()
+    except Error:
+        app.logger.exception("Unable to retrieve users through the API.")
+        return jsonify(status="error", message="Unable to retrieve users."), 500
+    finally:
+        if cursor:
+            cursor.close()
+
+    return jsonify(users)
+
+
+@app.route("/api/users/<int:user_id>", methods=["DELETE"])
+def delete_user_api(user_id):
+    """Delete a user by primary-key id."""
+    connection = connect_to_database()
+    if not connection:
+        return jsonify(status="error", message="Database unavailable."), 503
+
+    cursor = None
+    try:
+        cursor = connection.cursor(prepared=True)
+        cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+        connection.commit()
+        if not cursor.rowcount:
+            return jsonify(status="error", message="User not found."), 404
+    except Error:
+        app.logger.exception("Unable to delete user through the API.")
+        connection.rollback()
+        return jsonify(status="error", message="Unable to delete user."), 500
+    finally:
+        if cursor:
+            cursor.close()
+
+    return jsonify(status="success", message="User deleted successfully")
 
 
 if __name__ == "__main__":
